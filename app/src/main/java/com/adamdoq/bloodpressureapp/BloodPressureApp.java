@@ -53,6 +53,13 @@ public class BloodPressureApp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try
+        {
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
+
         setContentView(R.layout.activity_main);
 
         // Takes snapshot of firebase, empties + repopulates bpReadingsList, displays tasks
@@ -182,7 +189,7 @@ public class BloodPressureApp extends AppCompatActivity {
     private void displayReadings(ArrayList<BPReading> bpReadingsList){
         for (int i = 0; i < bpReadingsList.size(); i++) {
 
-            final int ADDED_MARGINS = 30; //Added each time readings are added to make up for the
+            final int ADDED_MARGINS = 160; //Added each time readings are added to make up for the
             // addition margin from each reading (scrollview takes it's height from the inner
             // linear layout's height, minus margins
 

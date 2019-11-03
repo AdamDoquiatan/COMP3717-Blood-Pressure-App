@@ -46,6 +46,14 @@ public class EditEntryActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try
+        {
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
+
+
         setContentView(R.layout.edit_entry_activity);
 
         id = getIntent().getStringExtra(getString(R.string.id_extra));
