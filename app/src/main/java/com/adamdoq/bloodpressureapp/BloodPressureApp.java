@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class BloodPressureApp extends AppCompatActivity {
@@ -38,7 +40,7 @@ public class BloodPressureApp extends AppCompatActivity {
     // Connect to firebase
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    // Will create a subtable called "ToDos" when you first add an entry
+    // Will create a subtable called "BPReadings" when you first add an entry
     DatabaseReference dbRef = database.getReference().child("BPReadings");
 
     ArrayList<BPReading> bpReadingsList = new ArrayList<>();
@@ -72,6 +74,17 @@ public class BloodPressureApp extends AppCompatActivity {
             }
         });
 
+        // Sets default date and time
+        Date d = new Date();
+        CharSequence defaultDate = DateFormat.format("MM/dd/yy", d.getTime());
+        dateText = findViewById(R.id.readingDate);
+        dateText.setText(getString(R.string.reading_date) + " " + defaultDate);
+
+        // Sets default time
+        CharSequence defaultTime = DateFormat.format("HH:mm", d.getTime());
+        timeText = findViewById(R.id.readingTime);
+
+        timeText.setText(getString(R.string.reading_time) + " " + defaultTime);
 
         // Date Picker stuff
         dateText = findViewById(R.id.readingDate);
@@ -99,13 +112,13 @@ public class BloodPressureApp extends AppCompatActivity {
             }
         });
 
+        // TimePicker stuff
         timeText = findViewById(R.id.readingTime);
 
         timeText.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
@@ -114,10 +127,12 @@ public class BloodPressureApp extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        timeText.setText( selectedHour + ":" + selectedMinute);
+
+                        timeText.setText(getString(R.string.reading_time) + " " + selectedHour +
+                                ":" + selectedMinute);
                     }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                }, hour, minute, false);//Yes 24 hour time
+                mTimePicker.setTitle(getString(R.string.time_picker_title));
                 mTimePicker.show();
 
             }
@@ -125,7 +140,7 @@ public class BloodPressureApp extends AppCompatActivity {
 
     }
 
-    public void createToDo (View view) {
+    public void createReading(View view) {
         LinearLayout displayLayout = findViewById(R.id.displayLayout);
         removeAllChildViews(displayLayout);
 
@@ -150,10 +165,6 @@ public class BloodPressureApp extends AppCompatActivity {
                 diastolicReading, condition);
 
         Task setValueTask = dbRef.child(bpReading.id).setValue(bpReading);
-        dateText.setText(""); // date widget and text field handle by calendar widget listeners.
-
-
-
 
         hideSoftKeyboard(view);
 
@@ -161,7 +172,7 @@ public class BloodPressureApp extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(BloodPressureApp.this,
-                        getString(R.string.create_entry_err) + e.toString(),
+                        getString(R.string.db_fetch_err) + e.toString(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -171,8 +182,8 @@ public class BloodPressureApp extends AppCompatActivity {
     private void displayReadings(ArrayList<BPReading> bpReadingsList){
         for (int i = 0; i < bpReadingsList.size(); i++) {
 
-            final int ADDED_MARGINS = 30; //Added each time todos are added to make up for the
-            // addition margin from each todo_ (scrollview takes it's height from the inner
+            final int ADDED_MARGINS = 30; //Added each time readings are added to make up for the
+            // addition margin from each reading (scrollview takes it's height from the inner
             // linear layout's height, minus margins
 
             LinearLayout displayLayout = findViewById(R.id.displayLayout);
@@ -184,35 +195,53 @@ public class BloodPressureApp extends AppCompatActivity {
             LinearLayout displaySublayout1 = new LinearLayout(this);
             displaySublayout1.setOrientation(LinearLayout.HORIZONTAL);
 
-            TextView toDoText = toDoViewCreatorLine1(getString(R.string.prepend_task),
+            TextView userId = viewCreatorLine1(getString(R.string.prepend_userId),
                     bpReadingsList.get(i).userId);
 
-            displaySublayout1.addView(toDoText);
+            TextView systolicReading = viewCreatorLine1(getString(R.string.prepend_systolic),
+                    bpReadingsList.get(i).systolicReading);
+
+            TextView diastolicReading = viewCreatorLine1(getString(R.string.prepend_diastolic),
+                    bpReadingsList.get(i).diastolicReading);
+
+            displaySublayout1.addView(userId);
+            displaySublayout1.addView(systolicReading);
+            displaySublayout1.addView(diastolicReading);
 
             // Second Row
             LinearLayout displaySublayout2 = new LinearLayout(this);
             displaySublayout2.setOrientation(LinearLayout.HORIZONTAL);
 
-            TextView userName  = toDoViewCreatorLine2(getString(R.string.prepend_user),
+            TextView date  = viewCreatorLine2(getString(R.string.prepend_date),
                     bpReadingsList.get(i).date);
 
-            TextView dueDate  = toDoViewCreatorLine2(getString(R.string.prepend_duedate),
+            TextView time  = viewCreatorLine2(getString(R.string.prepend_time),
                     bpReadingsList.get(i).time);
 
-            displaySublayout2.addView(userName);
-            displaySublayout2.addView(dueDate);
+            displaySublayout2.addView(date);
+            displaySublayout2.addView(time);
 
             // Third Row
             LinearLayout displaySublayout3 = new LinearLayout(this);
             displaySublayout1.setOrientation(LinearLayout.HORIZONTAL);
 
+            TextView condition = viewCreatorLine2(getString(R.string.prepend_condition),
+                    bpReadingsList.get(i).condition);
+
+            displaySublayout3.addView(condition);
+
+            // Fourth Row
+            LinearLayout displaySublayout4 = new LinearLayout(this);
+            displaySublayout1.setOrientation(LinearLayout.HORIZONTAL);
+
+
             final String id = bpReadingsList.get(i).id;
 
-            // Sets up edit button -- send the toDos id to the other activity
-            TextView editToDo = toDoViewCreatorLine2("", getString(R.string.edit));
-            editToDo.setTypeface(Typeface.MONOSPACE, Typeface.BOLD_ITALIC);
+            // Sets up edit button -- send the reading id to the other activity
+            TextView editReading = viewCreatorLine3("", getString(R.string.edit));
+            editReading.setTypeface(Typeface.MONOSPACE, Typeface.BOLD_ITALIC);
 
-            editToDo.setOnClickListener(new View.OnClickListener() {
+            editReading.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     LinearLayout displayLayout = findViewById(R.id.displayLayout);
@@ -224,12 +253,12 @@ public class BloodPressureApp extends AppCompatActivity {
                 }
             });
 
-            //Sets up remove button to remove todo_ from the database + remove all child views so
+            //Sets up remove button to remove reading from the database + remove all child views so
             // that the snapshot listener thing can reconstruct the list
-            TextView removeToDoButton = toDoViewCreatorLine2("", getString(R.string.remove));
-            removeToDoButton.setTypeface(Typeface.MONOSPACE, Typeface.BOLD_ITALIC);
+            TextView removeReadingButton = viewCreatorLine3("", getString(R.string.remove));
+            removeReadingButton.setTypeface(Typeface.MONOSPACE, Typeface.BOLD_ITALIC);
 
-            removeToDoButton.setOnClickListener(new View.OnClickListener() {
+            removeReadingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     removeAllChildViews((LinearLayout) view.getParent().getParent().getParent());
@@ -237,48 +266,64 @@ public class BloodPressureApp extends AppCompatActivity {
                 }
             });
 
-            displaySublayout3.addView(editToDo);
-            displaySublayout3.addView(removeToDoButton);
+            displaySublayout4.addView(editReading);
+            displaySublayout4.addView(removeReadingButton);
 
-            // Wrapper so that removeAllChildViews can delete views in todos at once
-            LinearLayout toDoWrapperLayout = new LinearLayout(this);
-            toDoWrapperLayout.setOrientation(LinearLayout.VERTICAL);
+            // Wrapper so that removeAllChildViews can delete views in readings at once
+            LinearLayout readingWrapperLayout = new LinearLayout(this);
+            readingWrapperLayout.setOrientation(LinearLayout.VERTICAL);
 
-            toDoWrapperLayout.addView(displaySublayout1);
-            toDoWrapperLayout.addView(displaySublayout2);
-            toDoWrapperLayout.addView(displaySublayout3);
-            displayLayout.addView(toDoWrapperLayout);
+            readingWrapperLayout.addView(displaySublayout1);
+            readingWrapperLayout.addView(displaySublayout2);
+            readingWrapperLayout.addView(displaySublayout3);
+            readingWrapperLayout.addView(displaySublayout4);
+            displayLayout.addView(readingWrapperLayout);
         }
     }
 
-    // Sets properties for stuff in the first layout of a todo_
-    public TextView toDoViewCreatorLine1(String prependText, String text){
-        TextView toDoText = new TextView(this);
-        toDoText.setText(prependText + text);
-        toDoText.setId(View.generateViewId());
-        toDoText.setTextSize(15);
-        toDoText.setPadding(10,10,10,0);
+    // Sets properties for stuff in the first layout of a reading
+    public TextView viewCreatorLine1(String prependText, String text){
+        TextView readingText = new TextView(this);
+        readingText.setText(prependText + text);
+        readingText.setId(View.generateViewId());
+        readingText.setTextSize(15);
+        readingText.setPadding(10,10,10,0);
 
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(10, 10, 10, 0);
-        toDoText.setLayoutParams(lp);
+        readingText.setLayoutParams(lp);
 
-        return toDoText;
+        return readingText;
     }
 
-    // Sets properties for stuff in the second layout of a todo_
-    public TextView toDoViewCreatorLine2(String prependText, String text){
-        TextView toDoText = new TextView(this);
-        toDoText.setText(prependText + text);
-        toDoText.setId(View.generateViewId());
-        toDoText.setTextSize(12);
-        toDoText.setPadding(10,0,10,10);
+    // Sets properties for stuff in the second layout of a reading
+    public TextView viewCreatorLine2(String prependText, String text){
+        TextView readingText = new TextView(this);
+        readingText.setText(prependText + text);
+        readingText.setId(View.generateViewId());
+        readingText.setTextSize(12);
+        readingText.setPadding(10,0,10,0);
+
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(10, 0, 10, 0);
+        readingText.setLayoutParams(lp);
+
+        return readingText;
+    }
+
+    // Sets properties for stuff in the third layout of a reading
+    public TextView viewCreatorLine3(String prependText, String text){
+        TextView readingText = new TextView(this);
+        readingText.setText(prependText + text);
+        readingText.setId(View.generateViewId());
+        readingText.setTextSize(12);
+        readingText.setPadding(10,0,10,10);
 
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(10, 0, 10, 10);
-        toDoText.setLayoutParams(lp);
+        readingText.setLayoutParams(lp);
 
-        return toDoText;
+        return readingText;
     }
 
     // Updates data due textview with calendar picker selection
@@ -286,7 +331,7 @@ public class BloodPressureApp extends AppCompatActivity {
         String myFormat = getString(R.string.date_format);
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        textView.setText(sdf.format(myCalendar.getTime()));
+        textView.setText(getString(R.string.reading_date) + " " + sdf.format(myCalendar.getTime()));
     }
 
 
@@ -296,7 +341,7 @@ public class BloodPressureApp extends AppCompatActivity {
     }
 
 
-    // Removes all todos from list every time a new one is added in order to avoid mysteriously
+    // Removes all readings from list every time a new one is added in order to avoid mysteriously
     // appearing duplicate tasks. For loop was unable to remove all children for some reason, so
     // went with while loop.
     void removeAllChildViews(ViewGroup viewGroup) {
@@ -306,7 +351,6 @@ public class BloodPressureApp extends AppCompatActivity {
             viewGroup.removeView(child);
         }
     }
-
 }
 
 // Could have put this in it's own file

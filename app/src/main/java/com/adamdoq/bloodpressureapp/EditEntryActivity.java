@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -31,7 +33,7 @@ public class EditEntryActivity extends AppCompatActivity {
     // Connect to firebase
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    // Will create a subtable called "ToDos" when you first add an entry
+    // Will create a subtable called "BPReadings" when you first add an entry
     DatabaseReference myRef = database.getReference().child("BPReadings");
 
 
@@ -47,6 +49,19 @@ public class EditEntryActivity extends AppCompatActivity {
         setContentView(R.layout.edit_entry_activity);
 
         id = getIntent().getStringExtra(getString(R.string.id_extra));
+
+        // Sets default date and time
+        Date d = new Date();
+        CharSequence defaultDate = DateFormat.format("MM/dd/yy", d.getTime());
+        dateText = findViewById(R.id.readingDate);
+        dateText.setText(getString(R.string.reading_date) + " " + defaultDate);
+
+        // Sets default time
+        CharSequence defaultTime = DateFormat.format("hh:mm", d.getTime());
+        timeText = findViewById(R.id.readingTime);
+
+                timeText.setText(getString(R.string.reading_time) + " " + defaultTime);
+
 
         // Date Picker stuff
         dateText = findViewById(R.id.readingDate);
@@ -74,6 +89,7 @@ public class EditEntryActivity extends AppCompatActivity {
             }
         });
 
+        // TimePicker stuff
         timeText = findViewById(R.id.readingTime);
         timeText.setOnClickListener(new View.OnClickListener() {
 
@@ -87,10 +103,36 @@ public class EditEntryActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                                timeText.setText( selectedHour + ":" + selectedMinute);
+                                timeText.setText(selectedHour + ":" + selectedMinute);
                             }
                         }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle(getString(R.string.time_picker_title));
+                mTimePicker.show();
+
+            }
+        });
+
+        // TimePicker stuff
+        timeText = findViewById(R.id.readingTime);
+
+        timeText.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(EditEntryActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+                                timeText.setText(getString(R.string.reading_time) + " " + selectedHour +
+                                        ":" + selectedMinute);
+                            }
+                        }, hour, minute, false);//Yes 24 hour time
+                mTimePicker.setTitle(getString(R.string.time_picker_title));
                 mTimePicker.show();
 
             }
@@ -98,9 +140,9 @@ public class EditEntryActivity extends AppCompatActivity {
 
     }
 
-    //Uses the ID of the source todo_ (the id is the key in firebase) to create a new toDo_ and
+    //Uses the ID of the source reading (the id is the key in firebase) to create a new reading and
     // replace the old one
-    public void editToDo(View view){
+    public void editReading(View view){
         EditText editText = findViewById(R.id.txUserId);
         String userId = editText.getText().toString();
         editText.setText("");
@@ -124,8 +166,6 @@ public class EditEntryActivity extends AppCompatActivity {
 
         Task setValueTask = myRef.child(id).setValue(updatedBPReading);
 
-        dateText.setText(""); // date widget and text field handle by calendar widget listeners.
-
         hideSoftKeyboard(view);
 
         setValueTask.addOnFailureListener(new OnFailureListener() {
@@ -146,7 +186,7 @@ public class EditEntryActivity extends AppCompatActivity {
         String myFormat = getString(R.string.date_format);
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        textView.setText(sdf.format(myCalendar.getTime()));
+        textView.setText(getString(R.string.reading_date) + " " + sdf.format(myCalendar.getTime()));
     }
 
     public void hideSoftKeyboard(View view){
