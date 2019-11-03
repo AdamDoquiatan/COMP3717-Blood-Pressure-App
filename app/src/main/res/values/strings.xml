@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Blood  Pressure App</string>
+    <string name="id_extra">id</string>
+    <string name="db_fetch_err">something went wrong.</string>
+    <string name="date_format">MM/dd/yy</string>
+    <string name="create_entry_err">something went wrong.</string>
+    <string name="prepend_task">Task:</string>
+    <string name="prepend_user">User:</string>
+    <string name="prepend_duedate">Due:</string>
+    <string name="prepend_complete">Complete:</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
+    <string name="create_report">Create Report</string>
+    <string name="user_id">User ID</string>
+    <string name="reading_date">Reading Date</string>
+    <string name="reading_time">Reading Time</string>
+    <string name="systolic_readings">Systolic Readings</string>
+    <string name="diastolic_reading">Diastolic Reading</string>
+    <string name="condition">Condition</string>
 </resources>
