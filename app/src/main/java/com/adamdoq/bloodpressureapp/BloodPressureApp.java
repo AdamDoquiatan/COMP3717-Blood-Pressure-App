@@ -146,7 +146,7 @@ public class BloodPressureApp extends AppCompatActivity {
         });
 
     }
-
+    //Grabs info from input and creates a reading.
     public void createReading(View view) {
         LinearLayout displayLayout = findViewById(R.id.displayLayout);
         removeAllChildViews(displayLayout);
@@ -167,6 +167,7 @@ public class BloodPressureApp extends AppCompatActivity {
         String condition = editText.getText().toString();
         editText.setText("");
 
+        //creates new reading from input data
         BPReading bpReading = new BPReading(userId,
                 timeText.getText().toString(), dateText.getText().toString(), systolicReading,
                 diastolicReading, condition);
@@ -387,6 +388,61 @@ class BPReading {
         this.systolicReading = systolicReading;
         this.diastolicReading = diastolicReading;
         this.condition = condition;
+    }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getSystolicReading() {
+        return systolicReading;
+    }
+
+    public void setSystolicReading(String systolicReading) {
+        this.systolicReading = systolicReading;
+    }
+
+    public String getDiastolicReading() {
+        return diastolicReading;
+    }
+
+    public void setDiastolicReading(String diastolicReading) {
+        this.diastolicReading = diastolicReading;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
     }
 }
