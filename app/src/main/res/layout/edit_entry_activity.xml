@@ -16,13 +16,16 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/line_background_medical">
 
         <Button
             android:id="@+id/bt_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="editReading"
+            android:background="@color/editButtonBG"
+            android:textColor="@color/buttonText"
             android:text="@string/edit_reading" />
 
         <EditText

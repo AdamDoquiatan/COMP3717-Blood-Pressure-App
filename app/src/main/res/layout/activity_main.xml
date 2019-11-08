@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BloodPressureApp">
+    tools:context=".BloodPressureApp"
+    android:background="@drawable/line_background_medical">
 
     <LinearLayout
         android:id="@+id/inputLayout"
@@ -23,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="createReading"
+            android:background="@color/createButtonBG"
+            android:textColor="@color/buttonText"
             android:text="@string/create_reading" />
 
         <EditText
