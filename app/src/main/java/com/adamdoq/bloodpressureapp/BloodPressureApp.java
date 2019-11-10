@@ -422,8 +422,13 @@ class BPReading {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTime() {
+        Date currentDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String dateTime = dateTimeFormatter.format(currentDate);
+        String[] splitDateTime = dateTime.split(" ");
+        this.date = splitDateTime[0];
+        this.time = splitDateTime[1];
     }
 
     public String getDate() {
@@ -431,7 +436,12 @@ class BPReading {
     }
 
     public void setDate(String date) {
-        this.date = date;
+        Date currentDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String dateTime = dateTimeFormatter.format(currentDate);
+        String[] splitDateTime = dateTime.split(" ");
+        this.date = splitDateTime[0];
+        this.time = splitDateTime[1];
     }
 
     public String getSystolicReading() {
@@ -454,8 +464,20 @@ class BPReading {
         return condition;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setCondition() {
+        int systolicReadingInt = Integer.parseInt(this.getSystolicReading());
+        int diastolicReadingInt = Integer.parseInt(this.getDiastolicReading());
+        if(systolicReadingInt < 120 && diastolicReadingInt < 80){
+            this.condition = ConditionTypes.NORMAL.toString();
+        } else if(systolicReadingInt < 130 && diastolicReadingInt < 80){
+            this.condition = ConditionTypes.ELEVATED.toString();
+        } else if(systolicReadingInt < 140 || diastolicReadingInt < 90){
+            this.condition = ConditionTypes.STAGE1.toString();
+        } else if(systolicReadingInt < 180 || diastolicReadingInt < 120){
+            this.condition = ConditionTypes.STAGE2.toString();
+        } else{
+            this.condition = ConditionTypes.HYPERTENSIVE.toString();
+        }
     }
 }
 
