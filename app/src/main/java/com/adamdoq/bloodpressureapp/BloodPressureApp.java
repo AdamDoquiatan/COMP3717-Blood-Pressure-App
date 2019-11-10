@@ -379,26 +379,34 @@ class BPReading {
 
         this.id = String.valueOf(System.currentTimeMillis());
         this.userId = userId;
+
+        //Code block for autogenerating date and time for the reading.
+        //Converts system time into a formatted datetime string and splits it.
         Date currentDate = new Date(System.currentTimeMillis());
         SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         String dateTime = dateTimeFormatter.format(currentDate);
         String[] splitDateTime = dateTime.split(" ");
         this.date = splitDateTime[0];
         this.time = splitDateTime[1];
+
         this.systolicReading = systolicReading;
         this.diastolicReading = diastolicReading;
+
+        //Code block for auto-generating condition for the reading.
+        //Converts readings into ints so they can be compared.
+        //Decides the condition based on a combination of both readings.
         int systolicReadingInt = Integer.parseInt(this.systolicReading);
         int diastolicReadingInt = Integer.parseInt(this.diastolicReading);
-        if(systolicReadingInt < 120 && diastolicReadingInt < 80){
-            this.condition = ConditionTypes.NORMAL.toString();
-        } else if(systolicReadingInt < 130 && diastolicReadingInt < 80){
-            this.condition = ConditionTypes.ELEVATED.toString();
-        } else if(systolicReadingInt < 140 || diastolicReadingInt < 90){
-            this.condition = ConditionTypes.STAGE1.toString();
-        } else if(systolicReadingInt < 180 || diastolicReadingInt < 120){
-            this.condition = ConditionTypes.STAGE2.toString();
-        } else{
+        if(systolicReadingInt > 180 || diastolicReadingInt > 120){
             this.condition = ConditionTypes.HYPERTENSIVE.toString();
+        } else if(systolicReadingInt >= 140 || diastolicReadingInt >= 90){
+            this.condition = ConditionTypes.STAGE2.toString();
+        } else if(systolicReadingInt >= 130 || diastolicReadingInt >= 80){
+            this.condition = ConditionTypes.STAGE1.toString();
+        } else if(systolicReadingInt >= 120){
+            this.condition = ConditionTypes.ELEVATED.toString();
+        } else {
+            this.condition = ConditionTypes.NORMAL.toString();
         }
     }
 
@@ -467,16 +475,16 @@ class BPReading {
     public void setCondition() {
         int systolicReadingInt = Integer.parseInt(this.getSystolicReading());
         int diastolicReadingInt = Integer.parseInt(this.getDiastolicReading());
-        if(systolicReadingInt < 120 && diastolicReadingInt < 80){
-            this.condition = ConditionTypes.NORMAL.toString();
-        } else if(systolicReadingInt < 130 && diastolicReadingInt < 80){
-            this.condition = ConditionTypes.ELEVATED.toString();
-        } else if(systolicReadingInt < 140 || diastolicReadingInt < 90){
-            this.condition = ConditionTypes.STAGE1.toString();
-        } else if(systolicReadingInt < 180 || diastolicReadingInt < 120){
-            this.condition = ConditionTypes.STAGE2.toString();
-        } else{
+        if(systolicReadingInt > 180 || diastolicReadingInt > 120){
             this.condition = ConditionTypes.HYPERTENSIVE.toString();
+        } else if(systolicReadingInt >= 140 || diastolicReadingInt >= 90){
+            this.condition = ConditionTypes.STAGE2.toString();
+        } else if(systolicReadingInt >= 130 || diastolicReadingInt >= 80){
+            this.condition = ConditionTypes.STAGE1.toString();
+        } else if(systolicReadingInt >= 120){
+            this.condition = ConditionTypes.ELEVATED.toString();
+        } else {
+            this.condition = ConditionTypes.NORMAL.toString();
         }
     }
 }
