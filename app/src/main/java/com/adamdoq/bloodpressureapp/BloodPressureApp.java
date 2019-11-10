@@ -32,9 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class BloodPressureApp extends AppCompatActivity {
 
@@ -46,9 +44,9 @@ public class BloodPressureApp extends AppCompatActivity {
 
     ArrayList<BPReading> bpReadingsList = new ArrayList<>();
 
-    final Calendar myCalendar = Calendar.getInstance();
-    TextView timeText;
-    TextView dateText;
+//    final Calendar myCalendar = Calendar.getInstance();
+//    TextView timeText;
+//    TextView dateText;
 
 
     @Override
@@ -83,68 +81,68 @@ public class BloodPressureApp extends AppCompatActivity {
         });
 
         // Sets default date and time
-        Date d = new Date();
-        CharSequence defaultDate = DateFormat.format("MM/dd/yy", d.getTime());
-        dateText = findViewById(R.id.readingDate);
-        dateText.setText(getString(R.string.reading_date) + " " + defaultDate);
+//        Date d = new Date();
+//        CharSequence defaultDate = DateFormat.format("MM/dd/yy", d.getTime());
+//        dateText = findViewById(R.id.readingDate);
+//        dateText.setText(getString(R.string.reading_date) + " " + defaultDate);
 
         // Sets default time
-        CharSequence defaultTime = DateFormat.format("HH:mm", d.getTime());
-        timeText = findViewById(R.id.readingTime);
+//        CharSequence defaultTime = DateFormat.format("HH:mm", d.getTime());
+//        timeText = findViewById(R.id.readingTime);
+//
+//        timeText.setText(getString(R.string.reading_time) + " " + defaultTime);
+//
+//        // Date Picker stuff
+//        dateText = findViewById(R.id.readingDate);
 
-        timeText.setText(getString(R.string.reading_time) + " " + defaultTime);
+//        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int monthOfYear,
+//                                  int dayOfMonth) {
+//                myCalendar.set(Calendar.YEAR, year);
+//                myCalendar.set(Calendar.MONTH, monthOfYear);
+//                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                updateLabel(dateText);
+//            }
+//
+//        };
 
-        // Date Picker stuff
-        dateText = findViewById(R.id.readingDate);
-
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel(dateText);
-            }
-
-        };
-
-        dateText.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                new DatePickerDialog(BloodPressureApp.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+//        dateText.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                new DatePickerDialog(BloodPressureApp.this, date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
 
         // TimePicker stuff
-        timeText = findViewById(R.id.readingTime);
-
-        timeText.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
-                TimePickerDialog mTimePicker;
-                mTimePicker = new TimePickerDialog(BloodPressureApp.this,
-                        new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-
-                        timeText.setText(getString(R.string.reading_time) + " " + selectedHour +
-                                ":" + selectedMinute);
-                    }
-                }, hour, minute, false);//Yes 24 hour time
-                mTimePicker.setTitle(getString(R.string.time_picker_title));
-                mTimePicker.show();
-
-            }
-        });
+//        timeText = findViewById(R.id.readingTime);
+//
+//        timeText.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Calendar mcurrentTime = Calendar.getInstance();
+//                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+//                int minute = mcurrentTime.get(Calendar.MINUTE);
+//                TimePickerDialog mTimePicker;
+//                mTimePicker = new TimePickerDialog(BloodPressureApp.this,
+//                        new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//
+//                        timeText.setText(getString(R.string.reading_time) + " " + selectedHour +
+//                                ":" + selectedMinute);
+//                    }
+//                }, hour, minute, false);//Yes 24 hour time
+//                mTimePicker.setTitle(getString(R.string.time_picker_title));
+//                mTimePicker.show();
+//
+//            }
+//        });
 
     }
     //Grabs info from input and creates a reading.
@@ -167,7 +165,7 @@ public class BloodPressureApp extends AppCompatActivity {
 
         //creates new reading from input data
         BPReading bpReading = new BPReading(userId,
-                timeText.getText().toString(), dateText.getText().toString(), systolicReading,
+                systolicReading,
                 diastolicReading);
 
         Task setValueTask = dbRef.child(bpReading.id).setValue(bpReading);
@@ -335,12 +333,12 @@ public class BloodPressureApp extends AppCompatActivity {
     }
 
     // Updates data due textview with calendar picker selection
-    private void updateLabel(TextView textView) {
-        String myFormat = getString(R.string.date_format);
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        textView.setText(getString(R.string.reading_date) + " " + sdf.format(myCalendar.getTime()));
-    }
+//    private void updateLabel(TextView textView) {
+////        String myFormat = getString(R.string.date_format);
+////        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+////
+////        textView.setText(getString(R.string.reading_date) + " " + sdf.format(myCalendar.getTime()));
+////    }
 
 
     public void hideSoftKeyboard(View view){
@@ -376,13 +374,17 @@ class BPReading {
     public BPReading() {}
 
 
-    public BPReading(String userId, String time, String date, String systolicReading,
+    public BPReading(String userId, String systolicReading,
                      String diastolicReading) {
 
         this.id = String.valueOf(System.currentTimeMillis());
         this.userId = userId;
-        this.time = time;
-        this.date = date;
+        Date currentDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String dateTime = dateTimeFormatter.format(currentDate);
+        String[] splitDateTime = dateTime.split(" ");
+        this.date = splitDateTime[0];
+        this.time = splitDateTime[1];
         this.systolicReading = systolicReading;
         this.diastolicReading = diastolicReading;
         int systolicReadingInt = Integer.parseInt(this.systolicReading);

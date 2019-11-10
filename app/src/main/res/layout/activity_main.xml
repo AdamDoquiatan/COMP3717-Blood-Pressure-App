@@ -36,26 +36,26 @@
             android:hint="@string/user_id"
             android:textSize="15sp"/>
 
-        <TextView
-            android:id="@+id/readingDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/reading_date"
-            android:paddingStart="4dp"
-            android:textSize="15sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/readingDate"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ems="10"-->
+<!--            android:hint="@string/reading_date"-->
+<!--            android:paddingStart="4dp"-->
+<!--            android:textSize="15sp" />-->
 
 
-        <TextView
-            android:id="@+id/readingTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="11dp"
-            android:layout_marginBottom="0dp"
-            android:ems="10"
-            android:hint="@string/reading_time"
-            android:paddingStart="4dp"
-            android:textSize="15sp"/>
+<!--        <TextView-->
+<!--            android:id="@+id/readingTime"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="11dp"-->
+<!--            android:layout_marginBottom="0dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint="@string/reading_time"-->
+<!--            android:paddingStart="4dp"-->
+<!--            android:textSize="15sp"/>-->
 
         <EditText
             android:id="@+id/txSystolicReading"
