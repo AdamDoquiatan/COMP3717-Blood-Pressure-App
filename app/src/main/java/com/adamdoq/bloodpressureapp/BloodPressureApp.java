@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -163,7 +164,6 @@ public class BloodPressureApp extends AppCompatActivity {
         String diastolicReading = editText.getText().toString();
         editText.setText("");
 
-        //Text for Condition should go here.    \
 
         //creates new reading from input data
         BPReading bpReading = new BPReading(userId,
@@ -385,7 +385,19 @@ class BPReading {
         this.date = date;
         this.systolicReading = systolicReading;
         this.diastolicReading = diastolicReading;
-        this.condition = "";
+        int systolicReadingInt = Integer.parseInt(this.systolicReading);
+        int diastolicReadingInt = Integer.parseInt(this.diastolicReading);
+        if(systolicReadingInt < 120 && diastolicReadingInt < 80){
+            this.condition = ConditionTypes.NORMAL.toString();
+        } else if(systolicReadingInt < 130 && diastolicReadingInt < 80){
+            this.condition = ConditionTypes.ELEVATED.toString();
+        } else if(systolicReadingInt < 140 || diastolicReadingInt < 90){
+            this.condition = ConditionTypes.STAGE1.toString();
+        } else if(systolicReadingInt < 180 || diastolicReadingInt < 120){
+            this.condition = ConditionTypes.STAGE2.toString();
+        } else{
+            this.condition = ConditionTypes.HYPERTENSIVE.toString();
+        }
     }
 
     public String getId() {
