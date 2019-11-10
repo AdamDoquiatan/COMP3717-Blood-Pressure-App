@@ -168,8 +168,8 @@ public class EditEntryActivity extends AppCompatActivity {
         editText.setText("");
 
         BPReading updatedBPReading = new BPReading(userId,
-                timeText.getText().toString(), dateText.getText().toString(), systolicReading,
-                diastolicReading, condition);
+                systolicReading,
+                diastolicReading);
         updatedBPReading.id = id;
 
         Task setValueTask = myRef.child(id).setValue(updatedBPReading);

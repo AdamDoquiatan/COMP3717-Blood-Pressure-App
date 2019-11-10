@@ -22,4 +22,5 @@
     <string name="time_picker_title">Select Time</string>
     <string name="am">AM</string>
     <string name="pm">PM</string>
+    <string name="creatorNames">Created by: Adam Doquiatan, Jason Tang</string>
 </resources>
