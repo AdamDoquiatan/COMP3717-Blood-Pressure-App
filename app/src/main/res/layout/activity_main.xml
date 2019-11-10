@@ -73,12 +73,11 @@
             android:hint="@string/diastolic_reading"
             android:textSize="15sp"/>
 
-        <EditText
+        <TextView
             android:id="@+id/txCondition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/condition"
             android:textSize="15sp"/>
     </LinearLayout>
 

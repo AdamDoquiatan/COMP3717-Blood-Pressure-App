@@ -163,14 +163,12 @@ public class BloodPressureApp extends AppCompatActivity {
         String diastolicReading = editText.getText().toString();
         editText.setText("");
 
-        editText = findViewById(R.id.txCondition);
-        String condition = editText.getText().toString();
-        editText.setText("");
+        //Text for Condition should go here.    \
 
         //creates new reading from input data
         BPReading bpReading = new BPReading(userId,
                 timeText.getText().toString(), dateText.getText().toString(), systolicReading,
-                diastolicReading, condition);
+                diastolicReading);
 
         Task setValueTask = dbRef.child(bpReading.id).setValue(bpReading);
 
@@ -379,7 +377,7 @@ class BPReading {
 
 
     public BPReading(String userId, String time, String date, String systolicReading,
-                     String diastolicReading, String condition) {
+                     String diastolicReading) {
 
         this.id = String.valueOf(System.currentTimeMillis());
         this.userId = userId;
@@ -387,7 +385,7 @@ class BPReading {
         this.date = date;
         this.systolicReading = systolicReading;
         this.diastolicReading = diastolicReading;
-        this.condition = condition;
+        this.condition = "";
     }
 
     public String getId() {
@@ -446,3 +444,8 @@ class BPReading {
         this.condition = condition;
     }
 }
+
+//Possible condition types.
+enum ConditionTypes{
+    NORMAL, ELEVATED, STAGE1, STAGE2, HYPERTENSIVE
+        }
