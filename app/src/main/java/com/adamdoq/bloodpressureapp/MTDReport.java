@@ -3,11 +3,14 @@ package com.adamdoq.bloodpressureapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,6 +45,14 @@ public class MTDReport extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        Button genReportBtn = findViewById(R.id.btnGenReport);
+        genReportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                generateReport(view);
             }
         });
     }
@@ -88,6 +99,11 @@ public class MTDReport extends AppCompatActivity {
         txtDiastolicAvg.setText(Double.toString(diastolicAverage));
         txtConditionAvg.setText(conditionAverage);
 
-        recreate();
+        Toast.makeText(MTDReport.this,
+                "Month-to-Date Report:\n" +
+                        "Systolic Average: " + systolicAverage + "\n" +
+                        "Diastolic Average: " + diastolicAverage + "\n" +
+                        "Condition Average: " + conditionAverage + "\n",
+                Toast.LENGTH_LONG).show();
     }
 }

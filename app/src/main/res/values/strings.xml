@@ -24,4 +24,7 @@
     <string name="pm">PM</string>
     <string name="creatorNames">Created by: Adam Doquiatan, Jason Tang</string>
     <string name="generate_report">Generate Report</string>
+    <string name="systolic_label">Systolic Average:</string>
+    <string name="diastolic_label">Diastolic Average:</string>
+    <string name="condition_label">Condition Average:</string>
 </resources>

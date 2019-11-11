@@ -38,9 +38,8 @@
         app:layout_constraintTop_toBottomOf="@+id/btnGenReport">
 
         <TableRow>
-            <TextView
-                android:text="Systolic Average"
-                />
+
+            <TextView android:text="@string/systolic_label" />
             <TextView
                 android:id="@+id/txtSystolicAvg"
                 android:text=""
@@ -48,9 +47,8 @@
                 />
         </TableRow>
         <TableRow>
-            <TextView
-                android:text="Diastolic Average"
-                />
+
+            <TextView android:text="@string/diastolic_label" />
             <TextView
                 android:id="@+id/txtDiastolicAvg"
                 android:text=""
@@ -58,9 +56,10 @@
                 />
         </TableRow>
         <TableRow>
+
             <TextView
-                android:text="Condition Average"
-                />
+                android:layout_marginRight="5dp"
+                android:text="@string/condition_label" />
             <TextView
                 android:id="@+id/txtConditionAvg"
                 android:text=""
