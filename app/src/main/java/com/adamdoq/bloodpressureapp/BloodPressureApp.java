@@ -176,7 +176,12 @@ public class BloodPressureApp extends AppCompatActivity {
         BPReading bpReading = new BPReading(userId,
                 systolicReading,
                 diastolicReading);
-
+        //Makes a warning toast if condition is hypertensive.
+        if(bpReading.condition.equals("HYPERTENSIVE")){
+            Toast.makeText(BloodPressureApp.this,
+                    "You should consult a doctor ASAP!",
+                    Toast.LENGTH_SHORT).show();
+        }
         Task setValueTask = dbRef.child(bpReading.id).setValue(bpReading);
 
         hideSoftKeyboard(view);

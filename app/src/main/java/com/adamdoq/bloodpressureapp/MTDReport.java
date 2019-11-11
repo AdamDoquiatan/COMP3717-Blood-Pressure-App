@@ -87,5 +87,7 @@ public class MTDReport extends AppCompatActivity {
         txtSystolicAvg.setText(Double.toString(systolicAverage));
         txtDiastolicAvg.setText(Double.toString(diastolicAverage));
         txtConditionAvg.setText(conditionAverage);
+
+        recreate();
     }
 }
