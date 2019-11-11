@@ -60,6 +60,7 @@ public class MTDReport extends AppCompatActivity {
     public void generateReport(View view){
         EditText userIDInput = findViewById(R.id.edtGenReport);
         String userID = userIDInput.getText().toString();
+        userIDInput.setText("");
         //used for calculating averages
         int systolicTotal = 0;
         int diastolicTotal = 0;
