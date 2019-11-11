@@ -13,6 +13,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -143,6 +144,14 @@ public class BloodPressureApp extends AppCompatActivity {
 //
 //            }
 //        });
+        Button genReportBtn = findViewById(R.id.btn_GenReport);
+        genReportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), MTDReport.class);
+                startActivity(intent);
+            }
+        });
 
     }
     //Grabs info from input and creates a reading.

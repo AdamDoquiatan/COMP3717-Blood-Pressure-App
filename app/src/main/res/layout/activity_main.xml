@@ -17,7 +17,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/btn_GenReport">
 
         <Button
             android:id="@+id/bt_create"
@@ -73,12 +73,6 @@
             android:hint="@string/diastolic_reading"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/txCondition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:textSize="15sp" />
     </LinearLayout>
 
     <ScrollView
@@ -98,10 +92,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/creatorNames"
-        app:layout_constraintBottom_toTopOf="@+id/inputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_GenReport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/createButtonBG"
+        android:onClick="createReading"
+        android:text="@string/generate_report"
+        android:textColor="@color/buttonText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtCreatorNames" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootLayout"
+    tools:context=".MTDReport">
+
+    <Button
+        android:id="@+id/btnGenReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generate_report"
+        app:layout_constraintTop_toBottomOf="@+id/edtGenReport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="111dp" />
+
+    <EditText
+        android:id="@+id/edtGenReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/user_id"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnGenReport"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TableLayout
+        android:id="@+id/reportTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/btnGenReport">
+
+        <TableRow>
+            <TextView
+                android:text="Systolic Average"
+                />
+            <TextView
+                android:id="@+id/txtSystolicAvg"
+                android:text=""
+                android:gravity="right"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="Diastolic Average"
+                />
+            <TextView
+                android:id="@+id/txtDiastolicAvg"
+                android:text=""
+                android:gravity="right"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="Condition Average"
+                />
+            <TextView
+                android:id="@+id/txtConditionAvg"
+                android:text=""
+                android:gravity="right"
+                />
+        </TableRow>
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

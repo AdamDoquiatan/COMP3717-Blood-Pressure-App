@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/health_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EditEntryActivity"></activity>
+        <activity android:name=".MTDReport" />
+        <activity android:name=".EditEntryActivity" />
         <activity android:name=".BloodPressureApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
