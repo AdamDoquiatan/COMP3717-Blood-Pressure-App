@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blood  Pressure App</string>
+    <string name="app_name">Doquiatan_Tang</string>
     <string name="id_extra">id</string>
     <string name="db_fetch_err">something went wrong.</string>
     <string name="date_format">MM/dd/yy</string>
